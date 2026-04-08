@@ -4,11 +4,9 @@ services:
     runtime: node
     nodeVersion: 22
     buildCommand: npm install --legacy-peer-deps && npm run build
-    startCommand: npm start
+    startCommand: npx playwright install chromium && npm start
     envVars:
       - key: SERPAPI_API_KEY
         sync: false
       - key: NODE_ENV
         value: production
-      - key: PLAYWRIGHT_BROWSERS_PATH
-        value: /opt/render/.cache/ms-playwright
