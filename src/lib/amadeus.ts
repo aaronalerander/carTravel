@@ -1,82 +1,85 @@
 import type { FlightOffer } from "@/types";
+import { getBrowser } from "./browser";
 
-const SERPAPI_BASE = "https://serpapi.com/search.json";
+function buildFlightsUrl(
+  origin: string,
+  destination: string,
+  departureDate: string,
+  returnDate: string
+): string {
+  // Google Flights direct-result URL for a round trip
+  return (
+    `https://www.google.com/travel/flights` +
+    `#flt=${origin}.${destination}.${departureDate}` +
+    `*${destination}.${origin}.${returnDate}` +
+    `;c:USD;e:1;sd:1;t:f`
+  );
+}
 
 export async function searchFlights(
   origin: string,
   destination: string,
   departureDate: string,
   returnDate: string,
-  flexDays = 0
+  _flexDays = 0
 ): Promise<FlightOffer | null> {
-  const apiKey = process.env.SERPAPI_API_KEY;
-  if (!apiKey) {
-    throw new Error("SERPAPI_API_KEY must be set in .env.local");
-  }
-
-  // SerpApi flexible_outbound_date_type: 1=±1d, 2=±2d, 3=±3d, 7=±7d
-  // Clamp to the values SerpApi actually supports
-  const flex = flexDays >= 7 ? "7" : flexDays >= 3 ? "3" : flexDays >= 2 ? "2" : flexDays >= 1 ? "1" : "0";
-
-  const params = new URLSearchParams({
-    engine: "google_flights",
-    departure_id: origin,
-    arrival_id: destination,
-    outbound_date: departureDate,
-    return_date: returnDate,
-    currency: "USD",
-    hl: "en",
-    type: "1", // 1 = round trip
-    api_key: apiKey,
-    ...(flex !== "0" && {
-      flexible_outbound_date_type: flex,
-      flexible_return_date_type: flex,
-    }),
-  });
+  const browser = await getBrowser();
+  const page = await browser.newPage();
 
   try {
-    const res = await fetch(`${SERPAPI_BASE}?${params.toString()}`, {
-      next: { revalidate: 0 }, // no caching at fetch level — we handle caching ourselves
+    await page.setExtraHTTPHeaders({
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "Accept-Language": "en-US,en;q=0.9",
+      Accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    });
+    await page.setViewportSize({ width: 1280, height: 800 });
+
+    const url = buildFlightsUrl(origin, destination, departureDate, returnDate);
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20000 });
+
+    // Wait for JS-rendered flight results
+    await page.waitForTimeout(8000);
+
+    // Extract prices from text nodes — Google Flights renders prices as
+    // plain text like "$284" inside spans within flight list items.
+    const prices: number[] = await page.evaluate(() => {
+      const found: number[] = [];
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT
+      );
+      let node: Node | null;
+      while ((node = walker.nextNode())) {
+        const text = (node.textContent ?? "").trim();
+        if (/^\$\d{2,4}(,\d{3})?$/.test(text)) {
+          const price = parseInt(text.replace(/[$,]/g, ""), 10);
+          if (price >= 50 && price <= 5000) {
+            found.push(price);
+          }
+        }
+      }
+      return found;
     });
 
-    if (!res.ok) {
-      console.error(`SerpApi HTTP ${res.status} for ${origin}→${destination}`);
-      return null;
-    }
-
-    const data = await res.json();
-
-    // SerpApi returns best_flights and other_flights; combine and pick cheapest
-    const allFlights = [
-      ...(data.best_flights ?? []),
-      ...(data.other_flights ?? []),
-    ];
-
-    if (allFlights.length === 0) return null;
-
-    // Sort by price and take the cheapest
-    allFlights.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
-    const cheapest = allFlights[0];
-
-    const firstLeg = cheapest.flights?.[0];
-    const lastLeg = cheapest.flights?.[cheapest.flights.length - 1];
-    if (!firstLeg) return null;
-
-    const stops = (cheapest.flights?.length ?? 1) - 1;
-
-    // SerpApi times are "YYYY-MM-DD HH:MM" — convert to ISO 8601
-    const toISO = (t: string) => t ? t.replace(" ", "T") + ":00" : "";
+    if (prices.length === 0) return null;
 
     return {
-      price: cheapest.price,
+      price: Math.min(...prices),
       currency: "USD",
-      airline: firstLeg.airline ?? firstLeg.airline_logo ?? "Unknown",
-      departureTime: toISO(firstLeg.departure_airport?.time ?? ""),
-      arrivalTime: toISO(lastLeg?.arrival_airport?.time ?? ""),
-      stops,
+      airline: "",
+      departureTime: "",
+      arrivalTime: "",
+      stops: 0,
     };
   } catch (err) {
-    console.error(`SerpApi flight search failed for ${origin}→${destination}:`, err);
+    console.error(
+      `Google Flights scrape failed for ${origin}→${destination}:`,
+      err
+    );
     return null;
+  } finally {
+    await page.close();
   }
 }

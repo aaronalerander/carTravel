@@ -55,15 +55,21 @@ async function fetchFlight(
   dest: Destination,
   departureDate: string,
   returnDate: string,
-  flexDays: number
+  flexDays: number,
+  semaphore: Semaphore
 ): Promise<FlightOffer | null> {
-  const cacheKey = `${origin}-${dest.airportCode}-${departureDate}-${returnDate}-flex${flexDays}`;
+  const cacheKey = `${origin}-${dest.airportCode}-${departureDate}-${returnDate}`;
   const cached = flightCache.get(cacheKey);
   if (cached !== null) return cached;
 
-  const result = await searchFlights(origin, dest.airportCode, departureDate, returnDate, flexDays);
-  flightCache.set(cacheKey, result);
-  return result;
+  const release = await semaphore.acquire();
+  try {
+    const result = await searchFlights(origin, dest.airportCode, departureDate, returnDate, flexDays);
+    flightCache.set(cacheKey, result);
+    return result;
+  } finally {
+    release();
+  }
 }
 
 async function fetchTuro(
@@ -92,12 +98,13 @@ async function fetchDestination(
   departureDate: string,
   returnDate: string,
   flexDays: number,
-  semaphore: Semaphore
+  turoSemaphore: Semaphore,
+  flightSemaphore: Semaphore
 ): Promise<DestinationResult> {
   try {
     const [flightOffer, turoListings] = await Promise.all([
-      withTimeout(fetchFlight(origin, dest, departureDate, returnDate, flexDays), 15000),
-      withTimeout(fetchTuro(dest, departureDate, returnDate, semaphore), 25000),
+      withTimeout(fetchFlight(origin, dest, departureDate, returnDate, flexDays, flightSemaphore), 30000),
+      withTimeout(fetchTuro(dest, departureDate, returnDate, turoSemaphore), 25000),
     ]);
 
     const cheapestCar = turoListings.length > 0 ? turoListings[0] : null;
@@ -160,11 +167,12 @@ export async function POST(req: Request) {
   );
   const flexDays = Math.min(7, Math.floor((windowDays - tripDays) / 2));
 
-  const semaphore = new Semaphore(5);
+  const turoSemaphore = new Semaphore(5);
+  const flightSemaphore = new Semaphore(3);
 
   const settled = await Promise.allSettled(
     destinations.map((dest) =>
-      fetchDestination(origin, dest, departureDate, returnDate, flexDays, semaphore)
+      fetchDestination(origin, dest, departureDate, returnDate, flexDays, turoSemaphore, flightSemaphore)
     )
   );
 
