@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: car-travel
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: SERPAPI_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production

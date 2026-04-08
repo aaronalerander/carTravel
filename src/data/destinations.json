@@ -1,0 +1,210 @@
+[
+  {
+    "id": "asheville-nc",
+    "city": "Asheville",
+    "state": "NC",
+    "airportCode": "AVL",
+    "roadHighlights": "Blue Ridge Parkway winding through the Appalachians, plus Tail of the Dragon (318 curves in 11 miles) just 90 minutes away.",
+    "lat": 35.5951,
+    "lon": -82.5515
+  },
+  {
+    "id": "denver-co",
+    "city": "Denver",
+    "state": "CO",
+    "airportCode": "DEN",
+    "roadHighlights": "Trail Ridge Road through Rocky Mountain National Park, plus countless mountain passes like Guanella Pass and Loveland Pass.",
+    "lat": 39.7392,
+    "lon": -104.9903
+  },
+  {
+    "id": "portland-or",
+    "city": "Portland",
+    "state": "OR",
+    "airportCode": "PDX",
+    "roadHighlights": "Columbia River Gorge Historic Highway, Mt. Hood Loop with sweeping volcanic views, and the Oregon Coast scenic byway.",
+    "lat": 45.5051,
+    "lon": -122.675
+  },
+  {
+    "id": "sedona-az",
+    "city": "Sedona",
+    "state": "AZ",
+    "airportCode": "FLG",
+    "roadHighlights": "Oak Creek Canyon (AZ-89A) is one of the most dramatic drives in the Southwest, plus Verde Valley scenic roads.",
+    "lat": 34.8697,
+    "lon": -111.761
+  },
+  {
+    "id": "gatlinburg-tn",
+    "city": "Gatlinburg",
+    "state": "TN",
+    "airportCode": "TYS",
+    "roadHighlights": "Great Smoky Mountains US-441, Fighting Creek Gap, and easy access to Tail of the Dragon at Deals Gap.",
+    "lat": 35.7143,
+    "lon": -83.5102
+  },
+  {
+    "id": "monterey-ca",
+    "city": "Monterey",
+    "state": "CA",
+    "airportCode": "MRY",
+    "roadHighlights": "17-Mile Drive, Pacific Coast Highway south toward Big Sur — arguably the most scenic coastal road in the US.",
+    "lat": 36.6002,
+    "lon": -121.8947
+  },
+  {
+    "id": "bozeman-mt",
+    "city": "Bozeman",
+    "state": "MT",
+    "airportCode": "BZN",
+    "roadHighlights": "Beartooth Highway (called 'the most beautiful road in America'), Gallatin Canyon, and the approach to Yellowstone.",
+    "lat": 45.677,
+    "lon": -111.0429
+  },
+  {
+    "id": "santa-fe-nm",
+    "city": "Santa Fe",
+    "state": "NM",
+    "airportCode": "SAF",
+    "roadHighlights": "High Road to Taos through mountain villages, the Turquoise Trail (NM-14) — classic Southwest mountain driving.",
+    "lat": 35.687,
+    "lon": -105.9378
+  },
+  {
+    "id": "charlottesville-va",
+    "city": "Charlottesville",
+    "state": "VA",
+    "airportCode": "CHO",
+    "roadHighlights": "Skyline Drive through Shenandoah National Park — 105 miles of ridgeline views with no traffic lights.",
+    "lat": 38.0293,
+    "lon": -78.4767
+  },
+  {
+    "id": "reno-nv",
+    "city": "Reno",
+    "state": "NV",
+    "airportCode": "RNO",
+    "roadHighlights": "Highway 89 around Lake Tahoe, Emerald Bay loop, and the Monitor Pass — Nevada and California's best Sierra Nevada roads.",
+    "lat": 39.5296,
+    "lon": -119.8138
+  },
+  {
+    "id": "burlington-vt",
+    "city": "Burlington",
+    "state": "VT",
+    "airportCode": "BTV",
+    "roadHighlights": "Vermont Route 100 down the spine of the Green Mountains — the quintessential fall foliage driving road.",
+    "lat": 44.4759,
+    "lon": -73.2121
+  },
+  {
+    "id": "bend-or",
+    "city": "Bend",
+    "state": "OR",
+    "airportCode": "RDM",
+    "roadHighlights": "Cascade Lakes Scenic Byway looping around volcanic peaks, McKenzie Pass through ancient lava fields.",
+    "lat": 44.0582,
+    "lon": -121.3153
+  },
+  {
+    "id": "traverse-city-mi",
+    "city": "Traverse City",
+    "state": "MI",
+    "airportCode": "TVC",
+    "roadHighlights": "M-22 coastal loop around Leelanau Peninsula — Michigan's most beloved scenic drive along Lake Michigan shoreline.",
+    "lat": 44.7631,
+    "lon": -85.6206
+  },
+  {
+    "id": "rapid-city-sd",
+    "city": "Rapid City",
+    "state": "SD",
+    "airportCode": "RAP",
+    "roadHighlights": "Needles Highway with its narrow rock tunnels and spires, Iron Mountain Road with Mt. Rushmore pigtail bridges.",
+    "lat": 44.0805,
+    "lon": -103.231
+  },
+  {
+    "id": "las-vegas-nv",
+    "city": "Las Vegas",
+    "state": "NV",
+    "airportCode": "LAS",
+    "roadHighlights": "Valley of Fire loop, Red Rock Canyon Scenic Drive, and the access road to Death Valley — diverse desert driving.",
+    "lat": 36.1699,
+    "lon": -115.1398
+  },
+  {
+    "id": "albuquerque-nm",
+    "city": "Albuquerque",
+    "state": "NM",
+    "airportCode": "ABQ",
+    "roadHighlights": "Sandia Crest Scenic Byway (NM-536) climbing 10,678 ft, Jemez Mountain Trail through red rock canyons.",
+    "lat": 35.0844,
+    "lon": -106.6504
+  },
+  {
+    "id": "missoula-mt",
+    "city": "Missoula",
+    "state": "MT",
+    "airportCode": "MSO",
+    "roadHighlights": "Bitterroot Valley US-93, the approach to Glacier National Park, and the Lolo Pass — big sky country driving.",
+    "lat": 46.8721,
+    "lon": -113.994
+  },
+  {
+    "id": "flagstaff-az",
+    "city": "Flagstaff",
+    "state": "AZ",
+    "airportCode": "FLG",
+    "roadHighlights": "AZ-89A through Oak Creek Canyon to Sedona, San Francisco Peaks Scenic Road, and Oak Creek Canyon.",
+    "lat": 35.1983,
+    "lon": -111.6513
+  },
+  {
+    "id": "savannah-ga",
+    "city": "Savannah",
+    "state": "GA",
+    "airportCode": "SAV",
+    "roadHighlights": "Georgia coastal scenic drives, the Lowcountry's mossy oak canopy roads, and South Carolina's ACE Basin byway.",
+    "lat": 32.0835,
+    "lon": -81.0998
+  },
+  {
+    "id": "knoxville-tn",
+    "city": "Knoxville",
+    "state": "TN",
+    "airportCode": "TYS",
+    "roadHighlights": "Direct access to Tail of the Dragon (US-129) — the world's most famous motorcycle and sports car road with 318 curves.",
+    "lat": 35.9606,
+    "lon": -83.9207
+  },
+
+  {
+    "id": "los-angeles-ca",
+    "city": "Los Angeles",
+    "state": "CA",
+    "airportCode": "LAX",
+    "roadHighlights": "Angeles Crest Highway (CA-2) through the San Gabriels, Mulholland Drive, and PCH north toward Malibu and Ventura.",
+    "lat": 34.0522,
+    "lon": -118.2437
+  },
+  {
+    "id": "san-diego-ca",
+    "city": "San Diego",
+    "state": "CA",
+    "airportCode": "SAN",
+    "roadHighlights": "Sunrise Highway up the Laguna Mountains, Palomar Mountain Road, and the back roads of Anza-Borrego desert.",
+    "lat": 32.7157,
+    "lon": -117.1611
+  },
+  {
+    "id": "san-francisco-ca",
+    "city": "San Francisco",
+    "state": "CA",
+    "airportCode": "SFO",
+    "roadHighlights": "Highway 1 south to Half Moon Bay and Big Sur, Marin Headlands twisties, and the Panoramic Highway over Mt. Tamalpais.",
+    "lat": 37.7749,
+    "lon": -122.4194
+  }
+]
