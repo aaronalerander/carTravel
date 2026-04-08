@@ -2,6 +2,7 @@ services:
   - type: web
     name: car-travel
     runtime: node
+    nodeVersion: 22
     buildCommand: npm install --legacy-peer-deps && npm run build
     startCommand: npm start
     envVars:
@@ -9,3 +10,5 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
+      - key: PLAYWRIGHT_BROWSERS_PATH
+        value: /opt/render/.cache/ms-playwright

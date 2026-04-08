@@ -7,7 +7,7 @@
     "build": "npm run playwright:install && next build",
     "start": "next start",
     "lint": "next lint",
-    "playwright:install": "npx playwright install chromium --with-deps"
+    "playwright:install": "npx playwright install chromium"
   },
   "dependencies": {
     "next": "^16.2.2",
